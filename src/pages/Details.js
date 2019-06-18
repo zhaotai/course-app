@@ -1,4 +1,6 @@
 import React from "react";
+import Button from "antd/lib/button";
+import { Pages } from "../App";
 import "../App.css";
 
 class Details extends React.Component {
@@ -12,7 +14,8 @@ class Details extends React.Component {
   render() {
     return (
       <div className="app">
-        {`this is article ${this.props.params.id}`}
+        {JSON.stringify(this.props.params.article)}
+        <Button onClick={() => this.props.goto(Pages.List)}>go back</Button>
       </div>
     );
   }

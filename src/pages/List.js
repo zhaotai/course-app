@@ -1,8 +1,8 @@
 import React from "react";
 import Card from "antd/lib/card";
+import Button from "antd/lib/button";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import logo from "../logo.svg";
 import dataLayer from "../dataLayer";
 import { Pages } from "../App";
 import "../App.css";
@@ -17,21 +17,24 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    const articles = dataLayer.getArticles();
-    this.setState({
-      articles
+    dataLayer.getArticles().then(res => {
+      this.setState({
+        articles: res.posts
+      });
     });
   }
 
   render() {
     return (
       <div className="app">
+        <Button onClick={this._gotoCreate.bind(this)}>Create</Button>
         <Row>{this._getList(this.state.articles)}</Row>
       </div>
     );
   }
 
   _getList(articles) {
+    console.log(articles);
     return articles.map(article => (
       <Col className="cardContainer" key={article.id} lg={6} md={8} sm={12} xs={24}>
         {this._getCard(article)}
@@ -44,15 +47,19 @@ class List extends React.Component {
       <Card
         hoverable
         className="card"
-        onClick={this._gotoDetails.bind(this, article.id)}
-        cover={<img src={logo} />}>
-          <Meta title={article.title} description={article.description} />
+        onClick={this._gotoDetails.bind(this, article)}
+        cover={<img src={require("../logo.svg")} alt="1" />}>
+          <Meta title={article.title} description={article.tags} />
       </Card>
     );
   }
 
-  _gotoDetails(id) {
-    this.props.goto(Pages.Details, { id });
+  _gotoCreate() {
+    this.props.goto(Pages.Create);
+  }
+
+  _gotoDetails(article) {
+    this.props.goto(Pages.Details, { article });
   }
 }
 

@@ -1,11 +1,13 @@
 import React from "react";
 import List from "./pages/List";
 import Details from "./pages/Details";
+import CreatePost from "./pages/CreatePost/index";
 import "./App.css";
 
 export const Pages = {
   List: "list",
-  Details: "details"
+  Details: "details",
+  Create: "create"
 };
 
 class App extends React.Component {
@@ -31,6 +33,7 @@ class App extends React.Component {
     switch(route.current) {
       case Pages.List: return <List params={route.params} goto={this._goto.bind(this)} />;
       case Pages.Details: return <Details params={route.params} goto={this._goto.bind(this)} />;
+      case Pages.Create: return <CreatePost params={route.params} goto={this._goto.bind(this)} />;
       default:
         return <List params={route.params} />;
     }
