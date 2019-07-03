@@ -3,7 +3,7 @@ import Card from "antd/lib/card";
 import Button from "antd/lib/button";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import dataLayer from "../dataLayer";
+import { loadList } from "../actionCreators/List";
 import { Pages } from "../App";
 import "../App.css";
 
@@ -17,18 +17,14 @@ class List extends React.Component {
   }
 
   componentDidMount() {
-    dataLayer.getArticles().then(res => {
-      this.setState({
-        articles: res.posts
-      });
-    });
+    loadList(this.props.dispatch);
   }
 
   render() {
     return (
       <div className="app">
         <Button onClick={this._gotoCreate.bind(this)}>Create</Button>
-        <Row>{this._getList(this.state.articles)}</Row>
+        <Row>{this._getList(this.props.listStore.articles)}</Row>
       </div>
     );
   }
@@ -55,11 +51,11 @@ class List extends React.Component {
   }
 
   _gotoCreate() {
-    this.props.goto(Pages.Create);
+    this.props.history.push(Pages.Create);
   }
 
   _gotoDetails(article) {
-    this.props.goto(Pages.Details, { article });
+    this.props.history.push(`${Pages.Details}/${article.id}`);
   }
 }
 

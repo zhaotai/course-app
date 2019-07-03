@@ -1,52 +1,36 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import List from "./pages/List";
 import Details from "./pages/Details";
 import CreatePost from "./pages/CreatePost/index";
+import { connect } from "./stores";
 import "./App.css";
 
 export const Pages = {
-  List: "list",
-  Details: "details",
-  Create: "create"
+  List: "/",
+  Details: "/details",
+  Create: "/create"
 };
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      route: {
-        current: Pages.List,
-        params: {}
-      }
-    };
-  }
-
   render() {
     return (
-      <div className="app">
-        {this._getPage(this.state.route)}
-      </div>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to={Pages.List}>Home</Link>
+              </li>
+            </ul>
+          </nav>
+          <Route path={Pages.List} exact render={routeProps => <List {...routeProps} {...this.props.store.getState()} dispatch={this.props.store.dispatch} />} />
+          <Route path={`${Pages.Details}/:id`} exact render={routeProps => <Details {...routeProps} {...this.props.store.getState()} dispatch={this.props.store.dispatch} />} />
+          <Route path={Pages.Create} exact component={CreatePost} />
+        </div>
+      </Router>
     );
-  }
-
-  _getPage(route) {
-    switch(route.current) {
-      case Pages.List: return <List params={route.params} goto={this._goto.bind(this)} />;
-      case Pages.Details: return <Details params={route.params} goto={this._goto.bind(this)} />;
-      case Pages.Create: return <CreatePost params={route.params} goto={this._goto.bind(this)} />;
-      default:
-        return <List params={route.params} />;
-    }
-  }
-
-  _goto(page, params) {
-    this.setState({
-      route: {
-        current: page,
-        params
-      }
-    });
   }
 }
 
-export default App;
+export default connect(App);

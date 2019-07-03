@@ -6,7 +6,7 @@ import Select from "antd/lib/select";
 import Icon from "antd/lib/icon";
 import "./index.css";
 import { Pages } from "../../App";
-import dataLayer from "../../dataLayer";
+import { submitPost } from "../../actionCreators/CreatePost";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -36,8 +36,8 @@ class CreatePost extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        dataLayer.createArticle(values).then(res => {
-          this.props.goto(Pages.List);
+        submitPost(values, () => {
+          this.props.history.push(Pages.List);
         });
         console.log('Received values of form: ', values);
       }

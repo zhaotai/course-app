@@ -6,16 +6,15 @@ import "../App.css";
 class Details extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      article: null
-    };
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="app">
-        {JSON.stringify(this.props.params.article)}
-        <Button onClick={() => this.props.goto(Pages.List)}>go back</Button>
+        {JSON.stringify(this.props.match.params)}
+        {JSON.stringify(this.props.listStore.articles[this.props.match.params.id])}
+        <Button onClick={() => this.props.history.go(-1)}>go back</Button>
       </div>
     );
   }
