@@ -37,7 +37,7 @@ class CreatePost extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         submitPost(values, () => {
-          this.props.history.push(Pages.List);
+          // this.props.history.push(Pages.List);
         });
         console.log('Received values of form: ', values);
       }
