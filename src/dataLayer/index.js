@@ -14,7 +14,12 @@ const createArticle = (article) => {
   .then(rawRes => rawRes.json());
 };
 
+const getFlights = () => {
+  return fetch(`${host}/flights/1`).then(raw => raw.json());
+};
+
 export default {
   getArticles,
-  createArticle
+  createArticle,
+  getFlights
 }

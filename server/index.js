@@ -9,6 +9,7 @@ const app = new Koa();
 
 let posts = [];
 const postsFile = path.join(__dirname, './posts.json');
+const flightsFile = path.join(__dirname, './flights.json');
 
 app.use(cors({
   origin: '*'
@@ -18,12 +19,26 @@ app.use(koaBody());
 app.use(router.routes());
 
 router.get('/', list)
+  .get('/flights/:id', getFlights)
   .get('/post/:id', show)
   .post('/post', create);
 
 
 function list(ctx) {
   ctx.body = { posts: posts };
+}
+
+async function getFlights(ctx) {
+  const uid = ctx.params.id
+  const flights = await utils.readJSON(flightsFile);
+  let res = "no data";
+  for (let i = 0; i < flights.length; i ++) {
+    if (flights[i].id === uid) {
+      res = flights[i];
+      break;
+    }
+  }
+  ctx.body = res;
 }
 
 async function show(ctx) {

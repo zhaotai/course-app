@@ -2,14 +2,17 @@ import * as React from 'react';
 import { createStore } from 'redux';
 import ListStore from './ListStore';
 import DetailStore from './DetailStore';
+import FlightsStore from './FlightsStore';
 
 const listStore = new ListStore();
 const detailStore = new DetailStore();
+const flightsStore = new FlightsStore();
 
 const store = createStore((state, action) => {
   return {
     [listStore.name]: listStore.onActionReceived(state, action),
     [detailStore.name]: detailStore.onActionReceived(state, action),
+    [flightsStore.name]: flightsStore.onActionReceived(state, action)
   }
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

@@ -39,13 +39,14 @@ class List extends React.Component {
   }
   
   _getCard(article) {
+    const flights = this.props.flightsStore.flights;
     return (
       <Card
         hoverable
         className="card"
         onClick={this._gotoDetails.bind(this, article)}
         cover={<img src={require("../logo.svg")} alt="1" />}>
-          <Meta title={article.title} description={article.tags} />
+          <Meta title={article.title} description={flights.includes("A") ? article.tags : null} />
       </Card>
     );
   }

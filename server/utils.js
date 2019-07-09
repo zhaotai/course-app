@@ -29,7 +29,17 @@ function readJSON(filename) {
   });
 }
 
+function readFileThunk(filename) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(filename, {'encoding': 'utf8'}, function (err, data) {
+      if(err) return reject(err);
+      resolve(data);
+    });
+  });
+}
+
 module.exports = {
   writeJSON,
-  readJSON
+  readJSON,
+  readFileThunk
 }
