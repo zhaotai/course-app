@@ -18,6 +18,10 @@ class Details extends React.Component {
       </div>
     );
   }
+
+  toString(article) {
+    return JSON.stringify(article);
+  }
 }
 
 export default Details;

@@ -1,7 +1,8 @@
 import dataLayer from "../dataLayer";
 
 export const Actions = {
-  GetFlightsSuccess: "GetFlightsSuccess"
+  GetFlightsSuccess: "GetFlightsSuccess",
+  GetFlightsFailed: "GetFlightsFailed"
 };
 
 export function getFlights(dispatch) {
